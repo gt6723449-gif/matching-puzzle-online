@@ -1,8 +1,10 @@
 const SHEET_NAME = 'Players';
 const HEADERS = ['Date', 'Number', 'Country', 'Age', 'Telegram', 'Amount', 'Status'];
+const BACKEND_VERSION = 'phone-index-v3';
+const PHONE_KEY_PREFIX = 'pair-pop-phone:';
 
 function doGet() {
-  return json({ ok: true, service: 'Pair Pop registration' });
+  return json({ ok: true, service: 'Pair Pop registration', version: BACKEND_VERSION });
 }
 
 function doPost(e) {
@@ -22,11 +24,13 @@ function doPost(e) {
     if (data.action === 'register') {
       if (row) return json({ ok: true, exists: true });
       const newRow = sheet.getLastRow() + 1;
+      // Apply text formatting before writing so a leading + is never parsed.
+      sheet.getRange(newRow, 2).setNumberFormat('@');
       sheet.getRange(newRow, 1, 1, HEADERS.length).setValues([[
         new Date(), number, clean(data.country), clean(data.age),
         clean(data.telegram), '', 'Registered'
       ]]);
-      sheet.getRange(newRow, 2).setNumberFormat('@');
+      rememberPhoneRow(number, newRow);
       return json({ ok: true, exists: false });
     }
 
@@ -59,10 +63,31 @@ function getSheet() {
 }
 
 function findPhoneRow(sheet, number) {
+  const properties = PropertiesService.getScriptProperties();
+  const cachedRow = Number(properties.getProperty(phoneKey(number)) || 0);
+
+  if (cachedRow >= 2 && cachedRow <= sheet.getLastRow()) {
+    const cachedNumber = normalizePhone(sheet.getRange(cachedRow, 2).getDisplayValue());
+    if (cachedNumber === number) return cachedRow;
+    properties.deleteProperty(phoneKey(number));
+  }
+
   if (sheet.getLastRow() < 2) return 0;
   const values = sheet.getRange(2, 2, sheet.getLastRow() - 1, 1).getDisplayValues();
   const index = values.findIndex(row => normalizePhone(row[0]) === number);
-  return index < 0 ? 0 : index + 2;
+  if (index < 0) return 0;
+
+  const row = index + 2;
+  rememberPhoneRow(number, row);
+  return row;
+}
+
+function rememberPhoneRow(number, row) {
+  PropertiesService.getScriptProperties().setProperty(phoneKey(number), String(row));
+}
+
+function phoneKey(number) {
+  return PHONE_KEY_PREFIX + normalizePhone(number).replace(/\D/g, '');
 }
 
 function normalizePhone(value) {

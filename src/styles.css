@@ -9,6 +9,7 @@
 .game-tile.covered{filter:brightness(.7) saturate(.72);cursor:not-allowed;opacity:1}
 .game-tile.layer-1{box-shadow:0 8px 0 #cbbce9,0 13px 22px #46337538}
 .game-tile.layer-2{box-shadow:0 9px 0 #c1afe4,0 16px 28px #39286355}
+.game-tile.layer-3{box-shadow:0 10px 0 #b49fdd,0 19px 32px #30205066}
 .tray{width:min(100%,440px);grid-template-columns:repeat(5,1fr)}
 @media(max-width:540px){.board{display:block;width:min(100%,66vh)}.game-tile{padding:3px}}
 @media(max-height:680px){.board{display:block;width:min(100%,72vh)}}

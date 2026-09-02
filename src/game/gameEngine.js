@@ -1,13 +1,16 @@
 import { tileTypes } from '../data/tiles.js';
 
 const BOARD_LAYOUT = [
+  // A tidy, symmetrical four-level pyramid: 36 + 20 + 12 + 4 tiles.
   ...Array.from({length:36},(_,index)=>({layer:0,x:index%6,y:Math.floor(index/6)})),
-  ...[1,3].flatMap(y=>[0.5,1.85,3.2,4.5].map(x=>({layer:1,x,y:y+0.28}))),
-  ...[1.55,3.45].flatMap(x=>[1.72,3.56].map(y=>({layer:2,x,y})))
+  ...Array.from({length:20},(_,index)=>({layer:1,x:(index%5)+0.5,y:Math.floor(index/5)+1})),
+  ...Array.from({length:12},(_,index)=>({layer:2,x:(index%4)+1,y:Math.floor(index/4)+1.5})),
+  ...Array.from({length:4},(_,index)=>({layer:3,x:(index%2)+2,y:Math.floor(index/2)+2}))
 ];
 
 export function createBoard() {
-  const tiles=tileTypes.flatMap(type=>[0,1,2,3].map(n=>({...type,uid:`${type.id}-${n}`})));
+  // Six of each picture gives three pairs per type and 72 tiles in total.
+  const tiles=tileTypes.flatMap(type=>[0,1,2,3,4,5].map(n=>({...type,uid:`${type.id}-${n}`})));
   for (let i=tiles.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [tiles[i],tiles[j]]=[tiles[j],tiles[i]]; }
   return tiles.map((tile,index)=>({...tile,...BOARD_LAYOUT[index]}));
 }
@@ -23,5 +26,5 @@ export function preloadTileImages() {
 }
 
 export function isTileSelectable(board,tile) {
-  return !board.some(other=>other.layer>tile.layer&&Math.abs(other.x-tile.x)<0.92&&Math.abs(other.y-tile.y)<0.92);
+  return !board.some(other=>other.layer>tile.layer&&Math.abs(other.x-tile.x)<0.82&&Math.abs(other.y-tile.y)<0.82);
 }

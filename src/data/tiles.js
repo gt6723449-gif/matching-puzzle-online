@@ -1,3 +1,5 @@
 export const tileTypes = [
-  ['gem','💎'],['star','⭐'],['rocket','🚀'],['flower','🌸'],['crown','👑'],['heart','💖'],['moon','🌙'],['rainbow','🌈'],['balloon','🎈'],['shell','🐚'],['cherry','🍒'],['gift','🎁']
-].map(([id,emoji]) => ({id,emoji,image:`/tiles/${id}.svg`}));
+  'crown', 'diamond', 'shell', 'tennis', 'basketball', 'baseball',
+  'football', 'soccer', 'cherries', 'gift', 'moon', 'star', 'balloon',
+  'flower', 'heart', 'car', 'bicycle'
+].map(id => ({id, image:`/tiles/${id}.png`}));

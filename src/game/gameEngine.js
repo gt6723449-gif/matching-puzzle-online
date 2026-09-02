@@ -1,17 +1,24 @@
 import { tileTypes } from '../data/tiles.js';
 
 const BOARD_LAYOUT = [
-  // A tidy, symmetrical four-level pyramid: 36 + 20 + 12 + 4 tiles.
-  ...Array.from({length:36},(_,index)=>({layer:0,x:index%6,y:Math.floor(index/6)})),
+  // A centered four-tier pyramid: 30 + 20 + 12 + 6 tiles.
+  ...Array.from({length:30},(_,index)=>({layer:0,x:index%6,y:Math.floor(index/6)+0.5})),
   ...Array.from({length:20},(_,index)=>({layer:1,x:(index%5)+0.5,y:Math.floor(index/5)+1})),
   ...Array.from({length:12},(_,index)=>({layer:2,x:(index%4)+1,y:Math.floor(index/4)+1.5})),
-  ...Array.from({length:4},(_,index)=>({layer:3,x:(index%2)+2,y:Math.floor(index/2)+2}))
+  ...Array.from({length:6},(_,index)=>({layer:3,x:(index%3)+1.5,y:Math.floor(index/3)+2}))
 ];
 
 export function createBoard() {
-  // Six of each picture gives three pairs per type and 72 tiles in total.
-  const tiles=tileTypes.flatMap(type=>[0,1,2,3,4,5].map(n=>({...type,uid:`${type.id}-${n}`})));
+  // Four of each of the 17 pictures gives 34 pairs and 68 tiles in total.
+  const tiles=tileTypes.flatMap(type=>[0,1,2,3].map(n=>({...type,uid:`${type.id}-${n}`})));
   for (let i=tiles.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [tiles[i],tiles[j]]=[tiles[j],tiles[i]]; }
+  const topStart=BOARD_LAYOUT.findIndex(position=>position.layer===3);
+  const topIds=tiles.slice(topStart).map(tile=>tile.id);
+  const topHasPair=topIds.some((id,index)=>topIds.indexOf(id)!==index);
+  if (!topHasPair) {
+    const matchingIndex=tiles.findIndex((tile,index)=>index<topStart&&tile.id===tiles[topStart].id);
+    [tiles[topStart+1],tiles[matchingIndex]]=[tiles[matchingIndex],tiles[topStart+1]];
+  }
   return tiles.map((tile,index)=>({...tile,...BOARD_LAYOUT[index]}));
 }
 

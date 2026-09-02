@@ -3,7 +3,7 @@ export const translations = {
     chooseLanguage:'Choose your language', english:'English', arabic:'العربية', continue:'Continue',
     yourInfo:'Your information', phone:'Phone number', countryCode:'Country code', age:'Age', telegram:'Telegram username (optional)',
     required:'Please complete the required fields.', invalidAge:'Please enter a valid age.', checking:'Checking...', used:'This phone number has already been used.', connection:'Could not connect. Please try again.',
-    welcome:'Pair Pop Puzzle', intro:'Find matching pairs, keep the tray clear, and remove every tile to win!', how:'How to play', rule1:'Tap any available tile to move it to the tray.', rule2:'Two matching tiles disappear automatically.', rule3:'Clear the board before the tray fills up.', start:'Start Game', loading:'Loading puzzle images...',
+    welcome:'Matching Puzzle', intro:'Find matching pairs, keep the tray clear, and remove every tile to win!', how:'How to play', rule1:'Tap any available tile to move it to the tray.', rule2:'Two matching tiles disappear automatically.', rule3:'Clear the board before the tray fills up.', start:'Start Game', loading:'Loading puzzle images...',
     tray:'Matching tray', gameOver:'Game Over', loseText:'The tray filled up. Try again!', playAgain:'Play Again',
     congrats:'Congratulations! You won 100$', claimText:'Claim your winnings on Time4Bets.', claim:'Claim now', redirecting:'Redirecting...', statusSaving:'Saving result...'
   },

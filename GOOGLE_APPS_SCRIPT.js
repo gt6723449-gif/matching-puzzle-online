@@ -4,7 +4,7 @@ const BACKEND_VERSION = 'phone-index-v3';
 const PHONE_KEY_PREFIX = 'pair-pop-phone:';
 
 function doGet() {
-  return json({ ok: true, service: 'Pair Pop registration', version: BACKEND_VERSION });
+  return json({ ok: true, service: 'Matching Puzzle registration', version: BACKEND_VERSION });
 }
 
 function doPost(e) {

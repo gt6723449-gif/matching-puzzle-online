@@ -1,4 +1,4 @@
-# Pair Pop Puzzle
+# Matching Puzzle
 
 A responsive English/Arabic React + Vite pair-matching game. Registration is saved to Google Sheets before play; the same phone row is updated after a win or loss.
 
@@ -33,7 +33,7 @@ Redeploy the web app after future Apps Script edits. The script creates the `Pla
 5. Choose **Initialize Repository** if VS Code shows that option.
 6. Open **Source Control → … → Remote → Add Remote**, paste the HTTPS URL, and name it `origin`.
 7. Stage the files with the **+** button.
-8. Enter a commit message such as `Initial Pair Pop game` and click **Commit**.
+8. Enter a commit message such as `Initial Matching Puzzle game` and click **Commit**.
 9. Click **Publish Branch**, **Sync Changes**, or **Push** and sign in to GitHub if asked.
 10. Confirm VS Code shows the branch (normally `main`) and GitHub displays the files.
 
@@ -42,7 +42,7 @@ Optional terminal commands:
 ```bash
 git init
 git add .
-git commit -m "Initial Pair Pop game"
+git commit -m "Initial Matching Puzzle game"
 git branch -M main
 git remote add origin YOUR_GITHUB_HTTPS_URL
 git push -u origin main
